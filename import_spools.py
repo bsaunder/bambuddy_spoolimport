@@ -21,23 +21,7 @@ import requests   # Third-party HTTP library — the Python equivalent of Java's
 import json       # Standard library for JSON serialization (usually not needed explicitly,
                   # but imported here for pretty-printing in debug output)
 
-from config import BASE_URL, API_KEY, CSV_FILE
-
-# ---------------------------------------------------------------------------
-# SPOOL ID → CORE WEIGHT CATALOG ID MAPPING
-# ---------------------------------------------------------------------------
-# Maps the CSV "spool_id" value to the Bambuddy core_weight_catalog_id.
-# If spool_id is not in this dict, both catalog_id and core_weight are
-# left as None (null).
-#
-# This is a Python dict literal — equivalent to a Java HashMap<Integer, Integer>.
-# ---------------------------------------------------------------------------
-
-SPOOL_CATALOG_MAP = {
-    1: 25,
-    2: 24,
-    3: 23,
-}
+from config import BASE_URL, API_KEY, CSV_FILE, SPOOL_CATALOG_MAP
 
 # ---------------------------------------------------------------------------
 # HELPER FUNCTION: Build the API payload from one CSV row
