@@ -18,8 +18,6 @@ Dependencies:
 
 import csv        # Standard library module for reading CSV files (no install needed)
 import requests   # Third-party HTTP library — the Python equivalent of Java's HttpClient
-import json       # Standard library for JSON serialization (usually not needed explicitly,
-                  # but imported here for pretty-printing in debug output)
 
 from config import BASE_URL, API_KEY, CSV_FILE, SPOOL_CATALOG_MAP
 
@@ -84,11 +82,8 @@ def build_payload(row):
 
     # -----------------------------------------------------------------------
     # CHANGE 1: Map spool_id to core_weight_catalog_id using SPOOL_CATALOG_MAP.
-    # core_weight is left as None when a catalog ID is found, since the API
-    # derives the weight from the catalog entry.
     # -----------------------------------------------------------------------
     spool_id_raw = get_field("spool_id")
-    core_weight        = None   # Will remain None when catalog ID is present
     core_catalog_id    = None
 
     if spool_id_raw is not None:
@@ -151,7 +146,6 @@ def build_payload(row):
         "rgba"                     : rgba_value,             # CHANGE 3
         "brand"                    : get_field("filament_brand"),
         "label_weight"             : 1000,                   # Default: 1kg spool
-        "core_weight"              : core_weight,            # CHANGE 1: None when catalog ID set
         "core_weight_catalog_id"   : core_catalog_id,        # CHANGE 1
         "weight_used"              : get_float_field("filament_used"),
         "slicer_filament"          : slicer_filament,        # CHANGE 4
