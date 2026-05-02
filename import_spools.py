@@ -136,6 +136,12 @@ def build_payload(row):
     # -----------------------------------------------------------------------
     nozzle_min, nozzle_max = get_temp_range("filament_print_temp")
 
+    note = get_field("note")
+    roll_id = get_field("roll_id")
+    if roll_id is not None:
+        roll_id_tag = f" #previous_id:{roll_id}"
+        note = f"{note}\n{roll_id_tag}" if note else roll_id_tag
+
     # Build and return the payload dict.
     # This is essentially constructing a JSON object — requests will serialize it.
     payload = {
@@ -152,7 +158,7 @@ def build_payload(row):
         "slicer_filament_name"     : slicer_filament_name,   # CHANGE 5
         "nozzle_temp_min"          : nozzle_min,             # CHANGE 2
         "nozzle_temp_max"          : nozzle_max,             # CHANGE 2
-        "note"                     : get_field("note"),
+        "note"                     : note,
         "tag_uid"                  : None,
         "tray_uuid"                : get_field("tray_uuid"),
         "data_origin"              : "csv_import",           # Tags records with import origin

@@ -47,6 +47,7 @@ The script expects a CSV with the following column headers:
 | `spool_id`           | Spool type ID — mapped to a catalog entry via `SPOOL_CATALOG_MAP` |
 | `tray_uuid`          | AMS tray UUID (optional)                         |
 | `note`               | Free-text note (optional)                        |
+| `roll_id`            | Previous roll ID — appended to the note as `#previous_id:XXX` (optional) |
 
 Rows with a blank `filament_type` are skipped.
 
