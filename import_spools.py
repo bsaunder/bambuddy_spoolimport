@@ -101,7 +101,7 @@ def build_payload(row):
         "brand"                    : get_field("filament_brand"),
         "label_weight"             : get_float_field("starting_size_g") or 1000,
         "core_weight_catalog_id"   : core_catalog_id,
-        "weight_used"              : get_float_field("filament_used"),
+        "weight_used"              : get_float_field("filament_used") or 0,
         "slicer_filament"          : slicer_filament,
         "slicer_filament_name"     : slicer_filament_name,
         "nozzle_temp_min"          : nozzle_min,

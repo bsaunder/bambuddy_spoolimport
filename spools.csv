@@ -1,2 +1,2 @@
-roll_id,spool_id,tray_uuid,note,filament_brand,filament_type,filament_line,filament_color,filament_color_hex,filament_sku,filament_print_temp,filament_used
-2,1,,Test note,Bambu Lab,ASA,Test,Test,000000,TST001,100-200,450
+roll_id,starting_size_g,spool_id,tray_uuid,note,filament_brand,filament_type,filament_line,filament_color,filament_color_hex,filament_sku,filament_print_temp,filament_used
+2,555.00,1,,Test note,Bambu Lab,ASA,Test,Test,000000,TST001,100-200,57
