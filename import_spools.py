@@ -145,7 +145,7 @@ def build_payload(row):
         "color_name"               : get_field("filament_color"),
         "rgba"                     : rgba_value,             # CHANGE 3
         "brand"                    : get_field("filament_brand"),
-        "label_weight"             : 1000,                   # Default: 1kg spool
+        "label_weight"             : get_float_field("starting_size_g") or 1000,
         "core_weight_catalog_id"   : core_catalog_id,        # CHANGE 1
         "weight_used"              : get_float_field("filament_used"),
         "slicer_filament"          : slicer_filament,        # CHANGE 4

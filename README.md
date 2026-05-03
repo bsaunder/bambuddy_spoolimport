@@ -46,6 +46,7 @@ The script expects a CSV with the following column headers:
 | `filament_used`      | Weight used in grams                             |
 | `spool_id`           | Spool type ID — mapped to a catalog entry via `SPOOL_CATALOG_MAP` |
 | `tray_uuid`          | AMS tray UUID (optional)                         |
+| `starting_size_g`    | Starting weight in grams — defaults to 1000 if blank (optional) |
 | `note`               | Free-text note (optional)                        |
 | `roll_id`            | Previous roll ID — appended to the note as `#previous_id:XXX` (optional) |
 
