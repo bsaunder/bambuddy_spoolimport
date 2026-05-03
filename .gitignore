@@ -219,3 +219,6 @@ __marimo__/
 
 # Local configuration (contains secrets — use config.sample.py as a template)
 config.py
+
+# Local spool data — use spools.sample.csv as a template
+spools.csv
