@@ -65,18 +65,21 @@ Prints a per-row result (`[OK]`, `[FAIL]`, or `[SKIP]`) and a summary on complet
 
 ### Print spool labels
 
-```
-python print_labels.py <id> [<id> ...] [--output labels.pdf]
-```
-
-Fetches the specified spool IDs from the Bambuddy API and generates a PDF of
-75 × 55 mm labels (ams_holder_75x55 format, one label per page). The PDF is
-written to `labels.pdf` by default; use `--output` to change the path.
+Fetches spools from the Bambuddy API and generates a PDF of 75 × 55 mm labels
+(ams_holder_75x55 format, one label per page). The PDF is written to `labels.pdf`
+by default; use `--output` to change the path.
 
 ```
 # Single label
 python print_labels.py 42
 
-# Multiple labels into a named file
-python print_labels.py 42 43 44 --output my_labels.pdf
+# Multiple specific labels
+python print_labels.py 42 43 44
+
+# All spools
+python print_labels.py --all
+
+# Custom output path
+python print_labels.py --all --output all_labels.pdf
+python print_labels.py 42 43 --output my_labels.pdf
 ```

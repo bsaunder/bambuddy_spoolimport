@@ -245,6 +245,12 @@ def fetch_spool(session, spool_id):
     return response.json()
 
 
+def fetch_all_spools(session):
+    response = session.get(f"{BASE_URL}/api/v1/inventory/spools", timeout=30)
+    response.raise_for_status()
+    return response.json()
+
+
 def spool_to_label(spool):
     """Map a Bambuddy API spool object to a LabelData."""
     return LabelData(
@@ -265,7 +271,9 @@ def main():
     parser = argparse.ArgumentParser(
         description="Generate ams_holder_75x55 PDF labels for Bambuddy spools."
     )
-    parser.add_argument("ids", nargs="+", type=int, metavar="ID", help="One or more spool IDs")
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("ids", nargs="*", type=int, metavar="ID", help="One or more spool IDs")
+    group.add_argument("--all", "-a", action="store_true", help="Generate labels for all spools")
     parser.add_argument("--output", "-o", default="labels.pdf", metavar="FILE",
                         help="Output PDF path (default: labels.pdf)")
     args = parser.parse_args()
@@ -277,19 +285,28 @@ def main():
         })
 
         labels = []
-        for spool_id in args.ids:
-            try:
-                spool = fetch_spool(session, spool_id)
-                labels.append(spool_to_label(spool))
-                print(f"  [OK]   #{spool_id}: {spool.get('brand', '?')} "
-                      f"{spool.get('material', '?')} — {spool.get('color_name', '?')}")
-            except requests.exceptions.HTTPError as e:
-                print(f"  [FAIL] #{spool_id}: HTTP {e.response.status_code} — {e}", file=sys.stderr)
-            except requests.exceptions.ConnectionError:
-                print(f"  [FAIL] Could not connect to {BASE_URL}. Check BASE_URL and network.", file=sys.stderr)
-                sys.exit(1)
-            except requests.exceptions.Timeout:
-                print(f"  [FAIL] #{spool_id}: Request timed out.", file=sys.stderr)
+        try:
+            if args.all:
+                spools = fetch_all_spools(session)
+                labels = [spool_to_label(s) for s in spools]
+                for s in spools:
+                    print(f"  [OK]   #{s['id']}: {s.get('brand', '?')} "
+                          f"{s.get('material', '?')} — {s.get('color_name', '?')}")
+            else:
+                for spool_id in args.ids:
+                    try:
+                        spool = fetch_spool(session, spool_id)
+                        labels.append(spool_to_label(spool))
+                        print(f"  [OK]   #{spool_id}: {spool.get('brand', '?')} "
+                              f"{spool.get('material', '?')} — {spool.get('color_name', '?')}")
+                    except requests.exceptions.HTTPError as e:
+                        print(f"  [FAIL] #{spool_id}: HTTP {e.response.status_code} — {e}", file=sys.stderr)
+                    except requests.exceptions.Timeout:
+                        print(f"  [FAIL] #{spool_id}: Request timed out.", file=sys.stderr)
+
+        except requests.exceptions.ConnectionError:
+            print(f"  [FAIL] Could not connect to {BASE_URL}. Check BASE_URL and network.", file=sys.stderr)
+            sys.exit(1)
 
         if not labels:
             print("No labels to generate.", file=sys.stderr)
