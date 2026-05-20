@@ -164,18 +164,18 @@ def _draw_label(c, data):
 
     # Lines 1 & 2: filament type and subtype — span full width so they never get cut off.
     if data.material:
-        size = 12
+        size = 14
         c.setFont("Helvetica-Bold", size)
         cursor_y -= size
         c.drawString(text_x, cursor_y, _truncate(c, data.material, "Helvetica-Bold", size, full_w))
         cursor_y -= gap
 
     if data.subtype:
-        size = 12
+        size = 14
         c.setFont("Helvetica-Bold", size)
         cursor_y -= size
         c.drawString(text_x, cursor_y, _truncate(c, data.subtype, "Helvetica-Bold", size, full_w))
-        cursor_y -= gap
+        cursor_y -= gap*2
 
     # QR is placed in the lower-right of the space that remains below the header lines.
     remaining_h = cursor_y - inner_y
@@ -190,7 +190,7 @@ def _draw_label(c, data):
 
     # Remaining lines occupy the text column to the left of the QR.
     if data.name:
-        size = 9
+        size = 11
         c.setFont("Helvetica-Bold", size)
         cursor_y -= size
         c.drawString(text_x, cursor_y, _truncate(c, data.name, "Helvetica-Bold", size, text_w))
@@ -198,14 +198,14 @@ def _draw_label(c, data):
 
     hex_code = _hex_code_label(data.rgba)
     if hex_code:
-        size = 6.5
+        size = 8
         c.setFont("Helvetica", size)
         cursor_y -= size
         c.drawString(text_x, cursor_y, hex_code)
-        cursor_y -= gap
+        cursor_y -= gap*2
 
     if data.brand:
-        size = 7
+        size = 10
         c.setFont("Helvetica-Bold", size)
         cursor_y -= size
         c.drawString(text_x, cursor_y, _truncate(c, data.brand, "Helvetica-Bold", size, text_w))
