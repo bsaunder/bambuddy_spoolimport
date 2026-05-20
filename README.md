@@ -4,6 +4,8 @@ A Python script that reads a CSV file of filament spools and bulk-imports them i
 
 > **AI Disclaimer:** The code in this repository was mostly generated with the assistance of AI tools, but has been human-tested and verified to work correctly.
 
+> **Credits:** The label rendering code in `print_labels.py` is derived from the [Bambuddy](https://github.com/maziggy/bambuddy) project (`backend/app/services/label_renderer.py`), used with attribution.
+
 ## Requirements
 
 - Python 3.7+
