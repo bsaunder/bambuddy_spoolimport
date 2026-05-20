@@ -65,6 +65,14 @@ python import_spools.py
 
 Prints a per-row result (`[OK]`, `[FAIL]`, or `[SKIP]`) and a summary on completion.
 
+### List spools
+
+```
+python list_spools.py
+```
+
+Prints a summary of all spools, one per line, in the format `<ID> - <Note>`.
+
 ### Print spool labels
 
 Fetches spools from the Bambuddy API and generates a PDF of 75 × 55 mm labels
