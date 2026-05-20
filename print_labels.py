@@ -136,9 +136,9 @@ def _truncate(c, text, font, size, max_w):
 def _draw_label(c, data):
     """Render one ams_holder_75x55 label.
 
-    Layout: swatch on the left (full height); filament type and subtype span
-    the full remaining width at the top; QR sits in the lower-right with the
-    remaining text fields to its left.
+    Layout: swatch on the left (full height); filament type, subtype, and
+    colour name span the full remaining width at the top; QR is anchored at
+    the bottom-right with remaining text fields to its left.
     """
     x, y, w, h = 0, 0, LABEL_W, LABEL_H
     pad = 1.2 * mm
@@ -162,7 +162,7 @@ def _draw_label(c, data):
     cursor_y = y + h - pad
     gap = 3.5  # points of spacing between lines
 
-    # Lines 1 & 2: filament type and subtype — span full width so they never get cut off.
+    # Header band: filament type, subtype, and colour name all span the full width.
     if data.material:
         size = 14
         c.setFont("Helvetica-Bold", size)
@@ -175,9 +175,16 @@ def _draw_label(c, data):
         c.setFont("Helvetica-Bold", size)
         cursor_y -= size
         c.drawString(text_x, cursor_y, _truncate(c, data.subtype, "Helvetica-Bold", size, full_w))
-        cursor_y -= gap*2
+        cursor_y -= gap
 
-    # QR is placed in the lower-right of the space that remains below the header lines.
+    if data.name:
+        size = 10
+        c.setFont("Helvetica-Bold", size)
+        cursor_y -= size
+        c.drawString(text_x, cursor_y, _truncate(c, data.name, "Helvetica-Bold", size, full_w))
+        cursor_y -= gap * 1.5
+
+    # QR anchored to the bottom-right of the remaining space.
     remaining_h = cursor_y - inner_y
     qr_size = min(inner_w * 0.40, remaining_h, 36 * mm)
     qr_x = x + w - pad - qr_size
@@ -189,23 +196,16 @@ def _draw_label(c, data):
         return
 
     # Remaining lines occupy the text column to the left of the QR.
-    if data.name:
-        size = 11
-        c.setFont("Helvetica-Bold", size)
-        cursor_y -= size
-        c.drawString(text_x, cursor_y, _truncate(c, data.name, "Helvetica-Bold", size, text_w))
-        cursor_y -= gap
-
     hex_code = _hex_code_label(data.rgba)
     if hex_code:
         size = 8
         c.setFont("Helvetica", size)
         cursor_y -= size
         c.drawString(text_x, cursor_y, hex_code)
-        cursor_y -= gap*2
+        cursor_y -= gap
 
     if data.brand:
-        size = 10
+        size = 9
         c.setFont("Helvetica-Bold", size)
         cursor_y -= size
         c.drawString(text_x, cursor_y, _truncate(c, data.brand, "Helvetica-Bold", size, text_w))
