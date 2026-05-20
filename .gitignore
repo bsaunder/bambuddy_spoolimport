@@ -222,3 +222,6 @@ config.py
 
 # Local spool data — use spools.sample.csv as a template
 spools.csv
+
+# Generated label PDFs
+*.pdf

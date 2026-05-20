@@ -7,10 +7,11 @@ A Python script that reads a CSV file of filament spools and bulk-imports them i
 ## Requirements
 
 - Python 3.7+
-- [requests](https://pypi.org/project/requests/) library
+- [requests](https://pypi.org/project/requests/)
+- [reportlab](https://pypi.org/project/reportlab/) and [qrcode](https://pypi.org/project/qrcode/) (only needed for `print_labels.py`)
 
 ```
-pip install requests
+pip install requests reportlab qrcode[pil]
 ```
 
 ## Setup
@@ -54,8 +55,28 @@ Rows with a blank `filament_type` are skipped.
 
 ## Usage
 
+### Import spools from CSV
+
 ```
 python import_spools.py
 ```
 
-The script prints a per-row result (`[OK]`, `[FAIL]`, or `[SKIP]`) and a summary on completion.
+Prints a per-row result (`[OK]`, `[FAIL]`, or `[SKIP]`) and a summary on completion.
+
+### Print spool labels
+
+```
+python print_labels.py <id> [<id> ...] [--output labels.pdf]
+```
+
+Fetches the specified spool IDs from the Bambuddy API and generates a PDF of
+75 × 55 mm labels (ams_holder_75x55 format, one label per page). The PDF is
+written to `labels.pdf` by default; use `--output` to change the path.
+
+```
+# Single label
+python print_labels.py 42
+
+# Multiple labels into a named file
+python print_labels.py 42 43 44 --output my_labels.pdf
+```
