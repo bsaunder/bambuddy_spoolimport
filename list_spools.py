@@ -21,7 +21,7 @@ def main():
         response.raise_for_status()
         spools = response.json()
 
-    for spool in spools:
+    for spool in sorted(spools, key=lambda s: s["id"]):
         note = spool.get("note") or ""
         print(f"{spool['id']} - {note}")
 
