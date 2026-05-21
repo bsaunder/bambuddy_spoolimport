@@ -147,8 +147,7 @@ def _draw_label(c, data):
     inner_w = w - 2 * pad
     inner_h = h - 2 * pad
 
-    # Hairline border for easy cutting from blank stock.
-    c.setStrokeColor(HexColor(0xCCCCCC))
+    c.setStrokeColor(black)
     c.setLineWidth(0.4)
     c.rect(x, y, w, h, stroke=1, fill=0)
 
