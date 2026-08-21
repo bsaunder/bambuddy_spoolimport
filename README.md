@@ -93,3 +93,10 @@ python print_labels.py --all
 python print_labels.py --all --output all_labels.pdf
 python print_labels.py 42 43 --output my_labels.pdf
 ```
+
+#### Printing in Adobe Acrobat / Reader
+
+Under **Page Sizing & Handling**:
+
+- **1–6 labels:** Use **Multiple**. Set pages per sheet to match your label count (up to 6). Above 6, labels will be scaled down to fit the page.
+- **Single label:** Use **Size** → **Shrink oversize pages**. Do *not* use "Actual size" — it places the label inside the printer's margin area and clips the edges.
